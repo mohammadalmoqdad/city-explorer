@@ -34,11 +34,19 @@ server.get('/weather',(req,res)=>{
         
     }
     console.log(Weather.all);
-    res.send(Weather.all);
+    res.send(JSON.stringify(Weather.all));
 
 
 })
-
+for(let i=0;i<weather.data.length;i++){
+    let descreption=weather.data[i].weather.description;
+    let time=weather.data[i].datetime;
+    console.log(time);
+  
+    let whetherObj=new Weather(descreption,time);
+    
+}
+console.log(JSON.stringify(Weather.all));
 
 
 
