@@ -13,7 +13,6 @@ server.get('/',(req,res)=>{
     res.send(weather);
 })
 function Weather(){
-    
 
 
 }
