@@ -46,7 +46,10 @@ for(let i=0;i<weather.data.length;i++){
     let whetherObj=new Weather(descreption,time);
     
 }
-console.log(JSON.stringify(Weather.all));
+const copyWeather = [...weather.all];
+weather.all=[];
+res.json(copyWeather);
+// res.JSON.stringify(Weather.all);
 
 
 
