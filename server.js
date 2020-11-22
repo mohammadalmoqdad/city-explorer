@@ -8,14 +8,31 @@ const server =express();
 server.use(cors());
 
 const PORT=process.env.PORT|| 3000;
+
+
+
+server.get('/location', (req, res) => {
+    const locationData = require('./data/location.json');
+    console.log(locationData);
+    const locationObj = new Location('Lynnwood', locationData);
+    res.send(locationObj);//return
+});
+
+function Location(city, locData) {
+    this.search_query = city;
+    this.formatted_query = locData[0].display_name;
+    this.latitude = locData[0].lat;
+    this.longitude = locData[0].lon;
+}
+
+
+
 let weather =require('./data/weather.json');
 server.get('/',(req,res)=>{
     res.send(weather);
 })
 
-server.get('/location',(req,res)=>{
-    res.send(weather);
-})
+
 Weather.all=[];
 function Weather(descreption,time){
     this.forecast =descreption;
@@ -33,11 +50,11 @@ server.get('/weather',(req,res)=>{
         let whetherObj=new Weather(descreption,time);
         
     }
-    console.log(Weather.all);
-    // res.send(JSON.stringify(Weather.all));
-    const copyWeather = [...weather.all];
-    weather.all=[];
-    res.send(json(copyWeather));
+    // console.log(Weather.all);
+    res.send(Weather.all);
+    // const copyWeather = [...weather.all];
+    // weather.all=[];
+    // res.send(json(copyWeather));
 
 
 })
