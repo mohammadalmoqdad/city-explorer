@@ -1,5 +1,5 @@
 "use strict";
-
+//Aplication Depenencies (require)
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 
 
-
+//application setup (port,server,use cors)
 server.get('/location', (req, res) => {
     const locationData = require('./data/location.json');
     console.log(locationData);
