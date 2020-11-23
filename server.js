@@ -1,21 +1,27 @@
 "use strict";
 //Aplication Depenencies (require)
 const express = require('express');
-require('dotenv').config();
 const cors = require('cors');
-const server = express();
-server.use(cors());
-const PORT = process.env.PORT || 3000;
-
+require('dotenv').config();
 
 
 //application setup (port,server,use cors)
-server.get('/location', (req, res) => {
+const PORT = process.env.PORT || 3000;
+const server = express();
+server.use(cors());
+
+//Application Routes
+server.get('/location', locationHandlerFunc);
+server.get('/weather', weathHanadlerFun);
+server.get('*',allRoutes);
+
+
+ function locationHandlerFunc(req, res){
     const locationData = require('./data/location.json');
     console.log(locationData);
     const locationObj = new Location('Lynnwood', locationData);
     res.send(locationObj);
-});
+}
 
 
 
@@ -29,7 +35,8 @@ function Location(city, locData) {
 
 
 
-// let weather = require('./data/weather.json');
+
+
 // server.get('/', (req, res) => {
 //     res.send(weather);
 // })
@@ -38,37 +45,34 @@ function Location(city, locData) {
 
 
 
-Weather.all = [];
-function Weather(descreption, time) {
-    this.forecast = descreption;
-    this.time = time;
-    Weather.all.push(this);
+// Weather.all = [];
+function Weather(day) {
+    this.forecast = day.weather.description;
+    this.time = day.time;
+    // Weather.all.push(this);
 }
 
 
 
 
 
-server.get('/', (req, res) => {
-    Weather.all=[];
-    for (let i = 0; i < weather.data.length; i++) {
-        let descreption = weather.data[i].weather.description;
-        let time = weather.data[i].datetime;
-        let whetherObj = new Weather(descreption, time);
-    }
+function weathHanadlerFun(req, res){
+    let weather = require('./data/weather.json');
+    let WeatherArr= weather.data.map(val =>{
+        return new Weather(val)
+    });
+    res.send(WeatherArr);
+}
 
-    res.send(Weather.all);
-    
-})
 
 
 
 
 
 //handle all routes
-server.get('*', (req, res) => {
+function allRoutes (req, res) {
     res.status(404).send('not found')
-})
+}
 
 
 
