@@ -29,10 +29,10 @@ function Location(city, locData) {
 
 
 
-let weather = require('./data/weather.json');
-server.get('/', (req, res) => {
-    res.send(weather);
-})
+// let weather = require('./data/weather.json');
+// server.get('/', (req, res) => {
+//     res.send(weather);
+// })
 
 
 
@@ -49,7 +49,8 @@ function Weather(descreption, time) {
 
 
 
-server.get('/weather', (req, res) => {
+server.get('/', (req, res) => {
+    Weather.all=[];
     for (let i = 0; i < weather.data.length; i++) {
         let descreption = weather.data[i].weather.description;
         let time = weather.data[i].datetime;
@@ -57,6 +58,7 @@ server.get('/weather', (req, res) => {
     }
 
     res.send(Weather.all);
+    
 })
 
 
