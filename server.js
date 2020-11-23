@@ -71,6 +71,17 @@ server.get('/weather',(req,res)=>{
 // res.send(json(copyWeather));
 // res.send(JSON.stringify(Weather.all));
 
+server.get('*', (req, res) => {
+    res.status(404).send('not found')
+})
+
+
+
+server.use((error, req, res) => {
+    res.status(500).send(error);
+})
+
+
 
 
 server.listen(PORT,()=>{
